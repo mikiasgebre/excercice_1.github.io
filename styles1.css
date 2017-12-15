@@ -1,0 +1,54 @@
+#container {
+    height: 100%;
+    width: 100%;
+    
+
+}
+
+#form {
+
+    width: 100%;
+    height: 20%;
+   
+
+}
+
+#right_plaine {
+
+    float: right;
+    margin-right: 150px;
+    
+}
+
+#bar_form {
+
+    width: 100%;
+ 
+}
+
+  #bar_form label, input {
+    display: inline-block;
+    margin: 30px;
+    
+}
+
+#bar_code {
+
+    width: 50%;
+    display: block;
+    background-color: rgb(238, 238, 238);
+    margin-left: auto;
+    margin-right: auto;
+    height: 20%;
+}
+
+
+
+#bar_code barcode {
+
+    width: 100%;
+    height: 100%;
+}
+
+
+

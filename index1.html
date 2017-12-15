@@ -1,0 +1,140 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Excercice1</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+
+    <link rel="stylesheet" href="styles1.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="JsBarcode.code128.min.js"></script>
+
+</head>
+
+<body>
+
+    <div id="container">
+        <div id="form">
+
+            Virtual bar code:
+            <input type="text" id="barname" onkeyup="checkKey();" />
+            <br>
+            <br>
+
+            <button onclick="decode()"> Decode </button>
+            <div id="right_plaine">
+                <input type="button" id="hide" value="hide" />
+
+            </div>
+
+        </div>
+
+
+        <div id="bar_form">
+            <form>
+
+                <label>
+                    Iban :
+                    <input id="iban" type="text">
+                </label>
+                <label>
+                    Amount to be payed :
+                    <input id="amount" type="text">
+                </label>
+                <label>
+                    Payment reference :
+                    <input id="reference" type="text">
+                </label>
+                <label>
+                    Due Date :
+                    <input id="due_date" type="text">
+                </label>
+            </form>
+            <div id="bar_code">
+
+                <svg id="barcode"></svg>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+
+        var numbers;
+        var input;
+        var version;
+        var amount;
+        var reference;
+        var date;
+
+
+        function decode() {
+
+            input = String(document.getElementById("barname").value);
+
+            numbers = Number(input);
+            version = input[0];
+            bank_account = input.substring(1, 17);
+            amount = input.substring(17, 25);
+            var trimmed = amount.replace(/\b0+/g, "");
+            var n = Number((trimmed / 100).toFixed(2));
+            var s = n.toString();
+            var replace = s.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+
+
+
+            reference = input.substring(25, 48);
+            var trimmed2 = reference.replace(/\b0+/g, "");
+            date = input.substring(48, input.length);
+
+            // display the value on the input iban
+            var iban = document.getElementById("iban");
+            iban.value += bank_account;
+
+            // display the input on the input payement
+            var euro = document.getElementById("amount");
+            euro.value += replace;
+
+            // display the reference number
+            var reference_number = document.getElementById("reference");
+            reference_number.value += trimmed2;
+
+            var date_ = document.getElementById("due_date");
+            var dt = date.substring(date.length - 2, date.length) +
+                date.substring(date.length - 4, date.length - 2) + date.substring(0, 2);
+            date_.value += dt;
+
+
+            // to generate the barcode 
+            JsBarcode("#barcode", input);
+
+
+        }
+
+        // function to change the color of the input
+        function checkKey() {
+
+            var plaintext = document.getElementById("barname");
+            plaintext.style.color = "#7FFF00";
+
+        }
+
+    </script>
+    <script>
+
+        // function to toogle when button pressed
+        jQuery(document).ready(function () {
+            jQuery('#hide').on('click', function (event) {
+                jQuery('#bar_form').slideToggle('show');
+                $(this).val($(this).val() == 'show' ? 'hide' : 'show');
+            });
+        });
+    </script>
+</body>
+
+</html>
